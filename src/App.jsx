@@ -4,21 +4,18 @@ import './App.css';
 
 import { initializeApp } from 'firebase/app';
 
-// TODO: Replace the following with your app's Firebase project configuration
-// DONE
-const firebaseConfig = {
-  apiKey: "AIzaSyD2NRWUeYzM5tZsdhM9SZQ9MkpPCRSf-Ao",
-  authDomain: "quick-react-baf2c.firebaseapp.com",
-  projectId: "quick-react-baf2c",
-  storageBucket: "quick-react-baf2c.appspot.com",
-  messagingSenderId: "757198641502",
-  appId: "1:757198641502:web:081d6fe17d1291ab3b17cf",
-  measurementId: "G-7BGP57ZHG3"
+const schedule = {
+  title: "CS Courses for 2018-2019"
 };
 
-// Initialize Firebase
-const App = initializeApp(firebaseConfig);
-const analytics = getAnalytics(App);
+const App = () => {
+
+  return (
+    <h1>{schedule.title}</h1>
+  );
+};
+
+export default App;
 
 /*const App = () => {
   const [count, setCount] = useState(0);
@@ -59,5 +56,3 @@ const analytics = getAnalytics(App);
     </div>
   );
 };*/
-
-export default App;
