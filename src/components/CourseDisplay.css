@@ -1,0 +1,17 @@
+.course-card {
+    width: 13rem;
+    height: 16rem;
+    position: relative;
+}
+
+.course-card .card-footer-custom {
+    position: absolute;
+    bottom: 8%;
+    left: 0;
+    width: 100%;
+}
+
+.card-footer-custom hr {
+    width: 90%;
+    margin: auto;
+}

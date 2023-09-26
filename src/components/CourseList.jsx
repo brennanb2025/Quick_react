@@ -1,7 +1,12 @@
 import CourseDisplay from './CourseDisplay';
+import './CourseList.css';
+
 const CourseList = ({courses}) => (
-    Object.entries(courses).map(
-        ([id, course]) => <CourseDisplay course={course}></CourseDisplay>
-    )
+    <div className="course-list">
+        {
+            Object.entries(courses).map(
+                ([id, course]) => <CourseDisplay key={id} course={course} />)
+        }
+    </div>
 );
 export default CourseList;
