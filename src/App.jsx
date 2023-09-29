@@ -4,8 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import CourseBanner from './components/CourseBanner';
-import CourseList from './components/CourseList';
+import CoursePage from './components/CoursePage';
 
 import { useJsonQuery } from './utilities/fetch';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -19,10 +18,8 @@ const Schedule = () => {
 
   return (
     <div>
-      <CourseBanner scheduleTitle={scheduleData.title} />
-      <CourseList courses={scheduleData.courses} />
+      <CoursePage pageTitle={scheduleData.title} courses={scheduleData.courses}/>
     </div>);
-  
 }
 
 const queryClient = new QueryClient();

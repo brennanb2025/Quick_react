@@ -15,3 +15,8 @@
     width: 90%;
     margin: auto;
 }
+
+.selected {
+    background-color:rgba(0, 136, 0, 0.3);
+    border: 1px solid rgb(0, 98, 0);
+}

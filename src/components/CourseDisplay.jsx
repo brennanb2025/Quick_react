@@ -1,7 +1,7 @@
 import './CourseDisplay.css';
 
-const CourseDisplay = ({course}) => (
-    <div className='card mb-4 p-2 course-card'>
+const CourseDisplay = ({id, course, selected, toggleSelected}) => (
+    <div className={`card mb-4 p-2 course-card ${selected.includes(id) ? 'selected' : ''}`} onClick={() => toggleSelected(id)}>
         <div className='card-body'>
             <h4 className='card-title'>{course.term} CS {course.number}</h4>
             <p className='card-text'>{course.title}</p>
