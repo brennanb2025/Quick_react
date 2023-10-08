@@ -40,7 +40,7 @@ const CoursePage = ({pageTitle, courses}) => {
   return (
     <div>
       <Modal open={open} close={closeModal}>
-        <CoursePlan courses={courses} selected={selected} toggleSelected={toggleSelected} />
+        <CoursePlan courses={courses} selected={selected} toggleSelected={toggleSelected} title={'Course Plan'}/>
       </Modal>
       <CourseBanner scheduleTitle={pageTitle} />
       <button className="btn btn-outline-dark" onClick={openModal}><i className="bi bi-calendar"></i></button>
