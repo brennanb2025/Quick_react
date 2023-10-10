@@ -3,13 +3,19 @@ import { useNavigate } from 'react-router-dom';
 
 
 import { useFormData } from '../utilities/useFormData';
+import { validateMeets } from '../utilities/classOverlap';
 import './CourseDisplay.css';
 
 
 const validateData = (key, val) => {
+    console.log("validating data",key,val);
     switch (key) {
-      case 'Title': case 'Meets':
-        return /(^\w\w)/.test(val) ? '' : 'must be least two characters';
+        case 'title':
+            console.log("title",/(^\w\w)/.test(val));
+            return /(^\w\w)/.test(val) ? '' : 'Class title must be least two characters';
+        case 'meets':
+            console.log('meets');
+            return validateMeets(val) ? '' : 'Invalid meeting time'
       default: return '';
     }
 };

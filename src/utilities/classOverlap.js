@@ -47,3 +47,71 @@ const getTimeDecimal = (time) => {
     const timeSplit = time.split(":");
     return parseFloat(timeSplit[0]) + parseFloat(timeSplit[1]/60.0);
 }
+
+
+const validateTime = (time) => {
+    return /^([0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(time);
+}
+
+const validateDay = (day) => {
+    //check not more than 1 match of each
+    let totalSize = 0;
+    const m = (day.match(/M/g) || []);
+    if(m.length > 1) {
+        return false;
+    } else if(m.length === 1) {
+        totalSize++;
+    }
+    const tu = (day.match(/Tu/g) || []);
+    if(tu.length > 1) {
+        return false;
+    } else if(tu.length === 1) {
+        totalSize+=2;
+    }
+    const w = (day.match(/W/g) || []);
+    if(w.length > 1) {
+        return false;
+    } else if(w.length === 1) {
+        totalSize++;
+    }
+    const th = (day.match(/Th/g) || []);
+    if(th.length > 1) {
+        return false;
+    } else if(th.length === 1) {
+        totalSize+=2;
+    }
+    const f = (day.match(/F/g) || []);
+    if(f.length > 1) {
+        return false;
+    } else if(f.length === 1) {
+        totalSize++;
+    }
+    //at least 1 match
+    return totalSize === day.length && (m.length == 1 || tu.length == 1 || w.length == 1 || th.length == 1 || f.length == 1);
+}
+
+export const validateMeets = (time) => {
+    //empty string or "dayofweek x:yz-x:yz", dayofweek=MTuWThF, 0<=x<=23 0<=y<=5 0<=z<=9
+    if(time.length === 0) {
+        return true;
+    }
+    const splitSpace = time.split(" ");
+    if(!splitSpace.length == 2) {
+        return false;
+    }
+    const dayOfWeek = splitSpace[0];
+    if(!validateDay(dayOfWeek)) {
+        return false;
+    }
+
+    const times = splitSpace[1].split("-")
+    if(!times.length === 2) {
+        return false;
+    }
+    
+    if(validateTime(times[0]) && validateTime(times[1])) {
+        return getTimeDecimal(times[0]) < getTimeDecimal(times[1]);
+    } else {
+        return false;
+    }
+}
