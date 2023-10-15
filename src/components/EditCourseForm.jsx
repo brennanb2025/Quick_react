@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 import { useFormData } from '../utilities/useFormData';
+import { useDbUpdate } from '../utilities/firebase';
 import { validateMeets } from '../utilities/classOverlap';
 import './CourseDisplay.css';
 
 
 const validateData = (key, val) => {
-    console.log("validating data",key,val);
     switch (key) {
         case 'title':
             console.log("title",/(^\w\w)/.test(val));
@@ -42,20 +42,22 @@ const ButtonBar = ({message, disabled}) => {
 
 const EditCourseForm = ({courses}) => {
     const { courseId } = useParams();
-
+    const navigate = useNavigate();
+    const [update, result] = useDbUpdate(`/courses/${courseId}`);
     const [state, change] = useFormData(validateData, {"title":courses[courseId].title,"meets":courses[courseId].meets});
     const submit = (evt) => {
         evt.preventDefault();
-        /*if (!state.errors) {
-
-        }*/
+        if (!state.errors) {
+          update(state.values);
+          navigate(-1); //go back to prev page
+        }
     }
 
     return (
         <form onSubmit={submit} noValidate className={state.errors ? 'was-validated' : null}>
             <InputField name="title" text="Title" state={state} change={change} />
             <InputField name="meets" text="Meets" state={state} change={change} />
-            <ButtonBar message={""} />
+            <ButtonBar message={result?.message} />
         </form>
     )
 };
