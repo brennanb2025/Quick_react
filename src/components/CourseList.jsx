@@ -26,7 +26,7 @@ const TermSelector = ({selection, setSelection}) => (
   </div>
 );
 
-const CourseList = ({courses, selectedCourses, toggleSelectedCourses, unselectable}) => {
+const CourseList = ({courses, userSignedIn, selectedCourses, toggleSelectedCourses, unselectable}) => {
     const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
     return (
         <div>
@@ -36,7 +36,7 @@ const CourseList = ({courses, selectedCourses, toggleSelectedCourses, unselectab
                     Object.entries(courses).filter(
                         ([id, course]) => course.term === terms[selection]
                     ).map(
-                        ([id, course]) => <CourseDisplay key={id} id={id} course={course} unselectable={unselectable} selected={selectedCourses} toggleSelected={toggleSelectedCourses}/>)
+                        ([id, course]) => <CourseDisplay key={id} id={id} course={course} userSignedIn={userSignedIn} unselectable={unselectable} selected={selectedCourses} toggleSelected={toggleSelectedCourses}/>)
                 }
             </div>
         </div>

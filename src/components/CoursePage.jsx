@@ -6,9 +6,27 @@ import CoursePlan from './CoursePlan';
 import { AnyOverlap } from '../utilities/classOverlap';
 
 
+
+import { signInWithGoogle, signOut, useAuthState } from '../utilities/firebase';
+
+const SignInButton = () => (
+  <button className="ms-auto btn btn-dark" onClick={signInWithGoogle}>Sign in</button>
+);
+
+const SignOutButton = () => (
+  <button className="ms-auto btn btn-dark" onClick={signOut}>Sign out</button>
+);
+
+const AuthButton = ({user}) => {
+  return user ? <SignOutButton /> : <SignInButton />;
+};
+
+const activation = ({isActive}) => isActive ? 'active' : 'inactive';
+
 const CoursePage = ({pageTitle, courses}) => {
   const [selected, setSelected] = useState([]);
   const [unselectable, setUnselectable] = useState([]);
+  const [user] = useAuthState();
 
   useEffect(() => {
     const overlapping = Object.entries(courses).filter(c =>  //check if c overlaps any in selected courses
@@ -42,9 +60,10 @@ const CoursePage = ({pageTitle, courses}) => {
       <Modal open={open} close={closeModal}>
         <CoursePlan courses={courses} selected={selected} toggleSelected={toggleSelected} title={'Course Plan'}/>
       </Modal>
+      <AuthButton user={user}/>
       <CourseBanner scheduleTitle={pageTitle} />
       <button className="btn btn-outline-dark" onClick={openModal}><i className="bi bi-calendar"></i></button>
-      <CourseList courses={courses} selectedCourses={selected} toggleSelectedCourses={toggleSelected} unselectable={unselectable} />
+      <CourseList courses={courses} userSignedIn={activation} selectedCourses={selected} toggleSelectedCourses={toggleSelected} unselectable={unselectable} />
     </div>
   );
 }
