@@ -4,6 +4,7 @@ import CourseBanner from "./CourseBanner";
 import Modal from './CourseSelectionModal';
 import CoursePlan from './CoursePlan';
 import { AnyOverlap } from '../utilities/classOverlap';
+import { useProfile } from '../utilities/profile';
 
 
 
@@ -21,12 +22,13 @@ const AuthButton = ({user}) => {
   return user ? <SignOutButton /> : <SignInButton />;
 };
 
-const activation = ({isActive}) => isActive ? 'active' : 'inactive';
-
 const CoursePage = ({pageTitle, courses}) => {
   const [selected, setSelected] = useState([]);
   const [unselectable, setUnselectable] = useState([]);
   const [user] = useAuthState();
+  const [profile, profileLoading, profileError] = useProfile();
+
+  console.log("profile:",profile);
 
   useEffect(() => {
     const overlapping = Object.entries(courses).filter(c =>  //check if c overlaps any in selected courses
@@ -63,7 +65,7 @@ const CoursePage = ({pageTitle, courses}) => {
       <AuthButton user={user}/>
       <CourseBanner scheduleTitle={pageTitle} />
       <button className="btn btn-outline-dark" onClick={openModal}><i className="bi bi-calendar"></i></button>
-      <CourseList courses={courses} userSignedIn={activation} selectedCourses={selected} toggleSelectedCourses={toggleSelected} unselectable={unselectable} />
+      <CourseList courses={courses} userSignedIn={profile} selectedCourses={selected} toggleSelectedCourses={toggleSelected} unselectable={unselectable} />
     </div>
   );
 }
