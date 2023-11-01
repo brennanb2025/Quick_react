@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 const CourseDisplay = ({id, course, userSignedIn, selected, toggleSelected, unselectable}) => {
     const isUnselectable = unselectable === undefined ? false : unselectable.includes(id);
   return (
-    <div className={`card mb-4 p-2 course-card ${isUnselectable ? 'unselectable' : ''} ${selected.includes(id) ? 'selected' : ''}`} onClick={() => toggleSelected(id)}>
+    <div className={`card mb-4 p-2 course-card ${isUnselectable ? 'unselectable' : ''} ${selected.includes(id) ? 'selected' : ''}`} 
+        onClick={() => toggleSelected(id)}
+        data-cy="course"> 
+        {/* course ^ for cypress */}
         {userSignedIn?.isAdmin && <Link to={`/editCourse/${id}`}><i className='bi bi-pencil-square'></i></Link>}
         <div className='card-body'>
             <h4 className='card-title'>{course.term} CS {course.number}</h4>
